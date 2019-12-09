@@ -1,0 +1,29 @@
+<odoo>
+  <data> 
+    <record id="progression_status_update_view" model="ir.ui.view">
+      <field name="name">progression.status.update.wizard</field>
+      <field name="model">progression.status.update</field>
+      <field name="arch" type="xml">
+        <form string="Progression Update">
+          <group>
+            <field name="completation"/>
+            <field name="state"/>
+          </group>
+          <footer>
+            <button name="update_state" string="Update" type="object" class="oe_highlight"/>
+            <button string="Cancel" class="oe_link" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="open_wizard_progression_status_update" model="ir.actions.act_window">
+      <field name="name">Progression Update</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">progression.status.update</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+
+        <record id="partner_kitchen" model="res.partner">
+            <field name="name">Kitchen Room</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="email">kitchen@mail.com</field>
+        </record>
+
+        <record id="kitchen_user" model="res.users">
+            <field name="partner_id" ref="partner_kitchen"/>
+            <field name="login">kitchen@mail.com</field>
+            <field name="password">kitchen</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="image" type="base64" file="pos_retail_restaurant/demo/config_image.jpg"/>
+            <field name="groups_id" eval="[(4, ref('mrp.group_mrp_user')), (4, ref('base.group_user')), (4,ref('point_of_sale.group_pos_user')), (4,ref('base.group_system'))]"/>
+        </record>
+
+        <record id="pos_config_kitchen" model="pos.config">
+            <field name="name">Kitchen Room</field>
+            <field name="bus_id" ref="pos_retail.pos_bus1"/>
+            <field name="screen_type">kitchen</field>
+            <field name="product_categ_ids" eval="[(6, 0, [ref('point_of_sale.fruits_vegetables'), ref('point_of_sale.partner_services')])]" />
+            <field name="user_ids" eval="[(4, ref('kitchen_user'))]"/>
+            <field name="sync_multi_session">True</field>
+            <field name="display_product_image">True</field>
+            <field name="display_product_name">True</field>
+        </record>
+
+        <record id="pos_retail.pos_config_01" model="pos.config">
+            <field name="screen_type">waiter</field>
+            <field name="printer_ids" eval="[(6, 0, [ref('pos_restaurant.kitchen_printer')])]" />
+        </record>
+        <record id="pos_retail.pos_config_02" model="pos.config">
+            <field name="screen_type">waiter</field>
+            <field name="printer_ids" eval="[(6, 0, [ref('pos_restaurant.kitchen_printer')])]" />
+        </record>
+
+        <record id="pos_retail.pos_config_01" model="pos.config">
+            <field name="iface_splitbill">True</field>
+            <field name="iface_printbill">True</field>
+            <field name="iface_orderline_notes">True</field>
+            <field name="printer_ids" eval="[(6, 0, [ref('pos_restaurant.kitchen_printer')])]" />
+        </record>
+        <record id="pos_retail.pos_config_02" model="pos.config">
+            <field name="iface_splitbill">True</field>
+            <field name="iface_printbill">True</field>
+            <field name="iface_orderline_notes">True</field>
+            <field name="printer_ids" eval="[(6, 0, [ref('pos_restaurant.kitchen_printer')])]" />
+        </record>
+       
+    </data>
+</odoo>

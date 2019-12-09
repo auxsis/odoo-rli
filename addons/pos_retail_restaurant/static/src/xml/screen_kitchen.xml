@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    
+    <t t-name="kitchen_screen">
+        <div class="paylaterlist-screen clientlist-screen screen">
+            <div class="kitchen_screen">
+                <section class="top-content">
+                    <t t-if="widget.pos.config.screen_type and widget.pos.config.screen_type !='kitchen'">
+                        <span class='button back'>
+                            <i class='fa fa-angle-double-left'></i>
+                            Back
+                        </span>
+                    </t>
+                    <span class='searchbox search-line oe_hidden'>
+                        <input placeholder='Search Product' />
+                        <span class='search-clear'></span>
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-x scrollable-y'>
+                                    <table class='paylater-list lines-list'>
+                                        <thead class="kitchen-screen-header">
+                                            <tr>
+                                                <t t-if="widget.pos.config.display_product_image">
+                                                    <th></th>
+                                                </t>
+                                                <t t-if="widget.pos.config.display_floor">
+                                                    <th class="kitchen_header">Floor</th>
+                                                </t>
+                                                <t t-if="widget.pos.config.display_table">
+                                                    <th class="kitchen_header">Table</th>
+                                                </t>
+                                                <th class="kitchen_header">Time</th>
+                                                <th class="kitchen_header">Name</th>
+                                                <th class="kitchen_header">Waiting</th>
+                                                <th class="kitchen_header">Done</th>
+                                                <th class="kitchen_header">Tags</th>
+                                                <th class="kitchen_header">Notes</th>
+                                                <th class="kitchen_header">Location</th>
+						<th class="kitchen_header">State</th>
+                                                <th class="kitchen_header"></th>
+                                                <th class="kitchen_header"></th>
+                                            </tr>
+                                        </thead>
+                                        <div>
+                                            <tbody class='priority'>
+                                            </tbody>
+                                            <tbody class='error'>
+                                            </tbody>
+                                            <tbody class='waiting'>
+                                            </tbody>
+                                            <tbody class='waiting-delivery oe_hidden'>
+                                            </tbody>
+                                            <tbody class='cancel oe_hidden'>
+                                            </tbody>
+                                            <tbody class='not-enough-material oe_hidden'>
+                                            </tbody>
+                                        </div>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </t>
+
+    <t t-name="kitchen_line">
+        <tr class='table-line' t-att-data-id='line.uid'>
+            <t t-if="widget.pos.config.display_product_image">
+                <td>
+                    <span>
+                        <img class='product-order-image' t-att-src='line.product_url'/>
+                    </span>
+                </td>
+            </t>
+            <t t-if="widget.pos.config.display_floor">
+                <t t-if="line.order.floor">
+                    <td class='table-line'>
+                        <t t-esc="line.order.floor['name']" />
+                    </td>
+                </t>
+                <t t-if="!line.order.floor">
+                    <td class='table-line'>
+
+                    </td>
+                </t>
+            </t>
+            <t t-if="widget.pos.config.display_table">
+                <t t-if="line.order.table">
+                    <td class='table-line'>
+                        <t t-esc="line.order.table['name']" />
+                    </td>
+                </t>
+                <t t-if="!line.order.table">
+                    <td class='table-line'>
+
+                    </td>
+                </t>
+            </t>
+            <td class='table-line'>
+                <t t-esc='line.creation_time' t-att-data-creation_time='line.creation_time'/>
+            </td>
+            <td class="product-order-name">
+                <t t-esc='line.product.display_name' />
+                <t t-foreach="line.variants" t-as="variant">
+                    <ul class="line-variant">
+                        <li class="info">
+                            <i class="fa fa-caret-right"/>
+                            <t t-esc="variant.value_id[1]" />
+                        </li>
+                    </ul>
+                </t>
+                <t t-if="line.combo_items">
+                    <t t-foreach="line.combo_items" t-as="combo_item">
+                        <ul class="combo-item">
+                            <li class="info">
+                                <i class="fa fa-caret-right"/>
+                                <t t-esc="combo_item.product_id[1]" />
+                                with quantity :
+                                <t t-esc="combo_item.quantity" />
+                            </li>
+                        </ul>
+                    </t>
+                </t>
+            </td>
+            <td class="product-order-name">
+                <t t-esc='line.quantity_wait'/>
+            </td>
+            <td class="product-order-name">
+                <t t-esc='line.quantity_done'/>
+            </td>
+            <td class="table-line">
+                <t t-if="line.tags">
+                    <t t-foreach="line.tags" t-as="tag">
+                        <span class='bus-info' t-att-data-id="tag.id">
+                            <i class="fa fa-tag">
+                                <t t-esc="tag.name"/>
+                            </i>
+                        </span>
+                    </t>
+                </t>
+            </td>
+            <td class="table-line-note">
+                <t t-esc='line.note' />
+            </td>
+	<td class="table-line-note">
+		<t t-esc='line.x_location' />
+	</td>
+            <td class="cooking-status-warning">
+                <t t-if="line.state === 'High-Priority'" ><p class="blink"><i class="fa fa-bullhorn"/> <t t-esc='line.state' /></p></t>
+                <t t-if="line.state !== 'High-Priority'" ><t t-esc='line.state' /></t>
+            </td>
+            <td>
+                <t t-if="widget.pos.config.screen_type === 'kitchen'">
+                    <t t-if="line.state == 'Waiting' || line.state == 'Error' || line.state == 'High-Priority'">
+                        <div class="btn btn-success kitchen_delivery"><i class='fa fa-check'/> Delivery</div>
+                    </t>
+                </t>
+            </td>
+            <td>
+                <t t-if="widget.pos.config.screen_type === 'kitchen'">
+                    <t t-if="line.state == 'Waiting' || line.state == 'Error' || line.state == 'High-Priority'">
+                        <div class="btn btn-danger kitchen_cancel"><i class='fa fa-info-circle'/> Not Enough Material</div>
+                    </t>
+                </t>
+            </td>
+            <td>
+                <t t-if="widget.pos.config.screen_type === 'kitchen'">
+                    <t t-if="line.state != 'Waiting'">
+                        <t t-if="line.state != 'Cancel'">
+                            <div class="btn btn-default kitchen_put_back"><i class='fa fa-step-backward'/> Put Back</div>
+                        </t>
+                    </t>
+                </t>
+            </td>
+            <td>
+                <t t-if="widget.pos.config.screen_type === 'kitchen'">
+                    <t t-if="line.state == 'Cancel'">
+                        <div class="btn btn-danger kitchen_confirm_cancel"><i class='fa fa-check'/> Confirm cancel</div>
+                    </t>
+                </t>
+            </td>
+        </tr>
+    </t>
+</templates>

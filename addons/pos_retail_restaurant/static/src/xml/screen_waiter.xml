@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="TableWidget">
+        <t t-jquery=">t" t-operation="replace">
+            <t t-if='!widget.selected '>
+                <t t-if="widget and widget.need_to_order() == 1">
+                    <div class='table blink' t-att-style='widget.table_style_str()'>
+                        <span
+                            t-if="widget.table.shape"
+                            t-att-class='"table-cover " + (widget.fill >= 1 ? "full" : "")'
+                            t-att-style='"height: " + Math.ceil(widget.fill * 100) + "%;"'
+                            ></span>
+                        <t t-if='widget.pos.get_count_need_print(widget.table).active_print !== 0'>
+                            <span class='active_print'><t t-esc='widget.pos.get_count_need_print(widget.table).active_print'/></span>
+                        </t>
+                        <t t-if='widget.pos.get_count_need_print(widget.table).active_print !== 0'>
+                            <span class='active_print'><t t-esc='widget.pos.get_count_need_print(widget.table).active_print'/></span>
+                        </t>
+                        <t t-if='widget.pos.get_count_need_print(widget.table).unactive_print !== 0'>
+                            <span class='unactive_print'><t t-esc='widget.pos.get_count_need_print(widget.table).unactive_print'/></span>
+                        </t>
+                        <t t-if='widget.get_waiting_delivery()'>
+                            <span class="waiting-delivery blink"><t t-esc='widget.get_waiting_delivery()'/></span>
+                        </t>
+                        <t t-if='widget.get_error()'>
+                            <span class="waiting-error blink"><t t-esc='widget.get_error()'/></span>
+                        </t>
+                        <t t-if="widget.get_info_order()['amount_total'] !== 0">
+                            <div class="create-time">In: <t t-esc='widget.get_info_order().created_time'/></div>
+                            <div class="order-information"><t t-esc='widget.format_currency(widget.get_info_order().amount_total)'/></div>
+                        </t>
+                        <span class='table-name'>
+                            <t t-esc='widget.table.name' />
+                        </span>
+                        <span class="table-seats"><t t-esc="widget.table.seats" /></span>
+                    </div>
+                </t>
+                <t t-if="widget and widget.need_to_order() == 0">
+                    <div class='table' t-att-style='widget.table_style_str()'>
+                        <span
+                            t-if="widget.table.shape"
+                            t-att-class='"table-cover " + (widget.fill >= 1 ? "full" : "")'
+                            t-att-style='"height: " + Math.ceil(widget.fill * 100) + "%;"'
+                            ></span>
+                        <t t-if='widget.pos.get_count_need_print(widget.table).active_print !== 0'>
+                            <span class='active_print'><t t-esc='widget.pos.get_count_need_print(widget.table).active_print'/></span>
+                        </t>
+                        <t t-if='widget.pos.get_count_need_print(widget.table).unactive_print !== 0'>
+                            <span class='unactive_print'><t t-esc='widget.pos.get_count_need_print(widget.table).unactive_print'/></span>
+                        </t>
+                        <t t-if='widget.get_waiting_delivery()'>
+                            <span class="waiting-delivery blink"><t t-esc='widget.get_waiting_delivery()'/></span>
+                        </t>
+                        <t t-if='widget.get_error()'>
+                            <span class="waiting-error blink"><t t-esc='widget.get_error()'/></span>
+                        </t>
+                        <t t-if="widget.get_info_order()['amount_total'] !== 0">
+                            <div class="create-time">In: <t t-esc='widget.get_info_order().created_time'/></div>
+                            <div class="order-information"><t t-esc='widget.format_currency(widget.get_info_order().amount_total)'/></div>
+                        </t>
+                        <span class='table-name'>
+                            <t t-esc='widget.table.name' />
+                        </span>
+                        <span class="table-seats"><t t-esc="widget.table.seats" /></span>
+                    </div>
+                </t>
+            </t>
+            <t t-if='widget.selected'>
+                <div class='table selected' t-att-style='widget.table_style_str()'>
+                    <span class='table-name'>
+                        <t t-esc='widget.table.name' />
+                    </span>
+                    <span class="table-seats"><t t-esc="widget.table.seats" /></span>
+                    <t t-if="widget.table.shape === 'round'">
+                        <span class='table-handle top'></span>
+                        <span class='table-handle bottom'></span>
+                        <span class='table-handle left'></span>
+                        <span class='table-handle right'></span>
+                    </t>
+                    <t t-if="widget.table.shape === 'square'">
+                        <span class='table-handle top right'></span>
+                        <span class='table-handle top left'></span>
+                        <span class='table-handle bottom right'></span>
+                        <span class='table-handle bottom left'></span>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="Orderline">
+        <t t-jquery=".info:first" t-operation="append">
+            <t t-if="widget.pos.config.screen_type">
+                <span t-if="line.state" t-att-class="line.state">
+                     <i class="fa  fa-bullhorn"/> State: <t t-esc="line.state"/>
+                </span>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="Orderline">
+        <t t-jquery=".info-list" t-operation="after">
+            <t t-if='line.product.pos_categ_id[0] and widget.pos.config.screen_type'>
+                <t t-if="line.state !== 'Done'">
+                    <t t-if="line.state == 'Waiting-delivery'">
+                        <span class='btn btn-success done'>
+                            <i class="fa fa-certificate"/> Done
+                        </span>
+                    </t>
+                    <t t-if="line.state == 'Waiting-delivery'">
+                        <span class='btn btn-danger error'>
+                            <i class="fa fa-bug"/> Error
+                        </span>
+                    </t>
+                    <t t-if="line.state != 'Cancel' || line.state != 'Error'">
+                        <t t-if="line.state !== 'High-Priority'">
+                            <t t-if="line.state !== 'Waiting-delivery' and line.state !== 'Cancel'">
+                                <span class='btn btn-warning priority'>
+                                    <i class="fa fa-bolt"/> Priority
+                                </span>
+                            </t>
+                        </t>
+                    </t>
+                    <t t-if="line.state === 'Error'">
+                        <span class='btn put-back'>
+                            <i class="fa fa-arrow-left"/> Put Back
+                        </span>
+                    </t>
+                    <t t-if="line.state === 'draft' || line.state === 'Error' || line.state == 'Not-enough-material'">
+                        <span class='btn btn-danger cancel'>
+                            <i class="fa fa-bug"/> Cancel
+                        </span>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="set_order_done">
+        <span class="product left_button">
+            <div class="button_icon">
+                <img src="/pos_retail/static/src/icons/done_all.png" class="pos_logo"/>
+            </div>
+            <div class="product-name button_text">
+                Done all
+            </div>
+        </span>
+    </t>
+
+    <t t-name="set_line_high_priority">
+        <span class="product left_button">
+            <div class="button_icon">
+                <img src="/pos_retail/static/src/icons/priority.png" class="pos_logo"/>
+            </div>
+            <div class="product-name button_text">
+                High priority
+            </div>
+        </span>
+    </t>
+
+    <t t-name="set_line_exit_high_priority">
+        <span class="product left_button">
+            <div class="button_icon">
+                <img src="/pos_retail/static/src/icons/log_out.png" class="pos_logo"/>
+            </div>
+            <div class="product-name button_text">
+                Exit priority
+            </div>
+        </span>
+    </t>
+
+    <t t-name="delivery_kitchen">
+        <span class="product left_button">
+            <div class="button_icon">
+                <img src="/pos_retail/static/src/icons/chef.png" class="pos_logo"/>
+            </div>
+            <div class="product-name button_text">
+                Send order to kitchen
+            </div>
+        </span>
+    </t>
+
+    <t t-extend="OrderlineNoteButton">
+        <t t-jquery="div[class*='control-button']" t-operation="replace">
+            <span class="product left_button">
+                <div class="button_icon">
+                    <img src="/pos_retail/static/src/icons/note.png" class="pos_logo"/>
+                </div>
+                <div class="product-name button_text">
+                    Note
+                </div>
+            </span>
+        </t>
+    </t>
+
+    <t t-extend="SplitbillButton">
+        <t t-jquery="span[class*='control-button']" t-operation="replace">
+            <span class="product left_button">
+                <div class="button_icon">
+                    <img src="/pos_retail/static/src/icons/split.png" class="pos_logo"/>
+                </div>
+                <div class="product-name button_text">
+                    Split
+                </div>
+            </span>
+        </t>
+    </t>
+
+    <t t-extend="PrintBillButton">
+        <t t-jquery="span[class*='control-button']" t-operation="replace">
+            <span class="product left_button">
+                <div class="button_icon">
+                    <img src="/pos_retail/static/src/icons/bill.png" class="pos_logo"/>
+                </div>
+                <div class="product-name button_text">
+                    Bill
+                </div>
+            </span>
+        </t>
+    </t>
+
+    <t t-extend="SubmitOrderButton">
+        <t t-jquery="span[class*='control-button']" t-operation="replace">
+            <span class="product left_button">
+                <div class="button_icon">
+                    <img src="/pos_retail/static/src/icons/chef.png" class="pos_logo"/>
+                </div>
+                <div class="product-name button_text">
+                    Order
+                </div>
+            </span>
+        </t>
+    </t>
+
+    <t t-extend="TableGuestsButton">
+        <t t-jquery="div[class*='control-button']" t-operation="replace">
+            <span class="product left_button">
+                <div class="button_icon">
+                    <img src="/pos_retail/static/src/icons/clients.png" class="pos_logo"/>
+                </div>
+                <div class="product-name button_text">
+                    Guests <t t-esc="widget.guests()" />
+                </div>
+            </span>
+        </t>
+    </t>
+
+    <t t-extend="TransferOrderButton">
+        <t t-jquery="div[class*='control-button']" t-operation="replace">
+            <span class="product left_button">
+                <div class="button_icon">
+                    <img src="/pos_retail/static/src/icons/transfer.png" class="pos_logo"/>
+                </div>
+                <div class="product-name button_text">
+                    Transfer order
+                </div>
+            </span>
+        </t>
+    </t>
+
+</templates>

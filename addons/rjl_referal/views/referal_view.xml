@@ -1,0 +1,201 @@
+<odoo>
+   <data>
+
+    <!-- Inherit Res Users Form -->
+    <record id="rjl_res_users_form_inherit" model="ir.ui.view">
+      <field name="name">rjl.res.users.form.inherit</field>
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_form"/>
+      <field name="arch" type="xml">
+        <data>
+          <field name="partner_id" position="after">
+            <field name="bonus_referal"/>
+            <field name="bonus_sponsor"/>
+            <field name="bonus_transaksi"/>
+            <field name="bonus_gen"/>
+            <field name="total_bonus"/>
+            <field name="paid_bonus"/>
+            <field name="bonus_due"/>
+          </field>
+        </data>
+      </field>
+    </record>
+
+    <!-- Inherit Res Users Form -->
+    <record id="rjl_sale_order_form_inherit" model="ir.ui.view">
+      <field name="name">rjl.sale.order.form.inherit</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <data>
+          <field name="user_id" position="after">
+            <field name="referal_id"/>
+          </field>
+        </data>
+      </field>
+    </record>
+
+    <!-- Action Sale Leads -->
+    <record model="ir.actions.act_window" id="act_sale_leads">
+      <field name="name">Sale Leads</field>
+      <field name="res_model">sale.lead</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="sale_leads" name="Sale Leads" parent="sales_team.menu_sales" action="rjl_referal.act_sale_leads"/>
+
+    <!-- Sale Leads Tree view  -->
+    <record model="ir.ui.view" id="view_sale_lead_tree">
+      <field name="name">sale.leads.tree</field>
+      <field name="model">sale.lead</field>
+      <field name="arch" type="xml">
+        <tree string="Sale Leads">
+          <field name="customer_name"/>
+          <field name="followup_date"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Sale Leads Form view  -->
+    <record id="sale_leads_form" model="ir.ui.view">
+      <field name="name">sale.leads.form</field>
+      <field name="model">sale.lead</field>
+      <field name="arch" type="xml">
+        <form string="Sale Leads">
+          <header>
+            <button name="convert_to_lose" states="open" string="Convert to Lose" type="object" class="oe_highlight"/>
+            <button name="convert_to_quotation" states="open" string="Convert to SO" type="object" class="oe_highlight"/>
+            <button name="confirm" states="draft" string="Confirm" type="object" class="oe_highlight"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,open,done" readonly="1"/>
+          </header>
+          <sheet>
+            <group>
+              <group col="4" colspan="4">
+                <field name="customer_name"/>
+                <field name="company_name"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="street"/>
+                <field name="bidang"/>
+                <field name="referal_id" readonly="True"/>
+                <field name="salesman_id" readonly="True"/>
+                <field name="project_estimation"/>
+                <field name="followup_date"/>
+              </group>
+            </group>
+            <field name="notes" placeholder="Notes"/>
+            <div class="oe_clear"/>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <!-- Action Sale Bonus Config -->
+    <record model="ir.actions.act_window" id="act_sale_bonus_config">
+      <field name="name">Sale Bonus Config</field>
+      <field name="res_model">sale.bonus.config</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="sale_bonus_config" name="Sale Bonus Config" parent="sales_team.menu_sale_config" action="rjl_referal.act_sale_bonus_config"/>
+
+    <!-- Sale Bonus Tree view  -->
+    <record model="ir.ui.view" id="view_sale_sale_bonus_config_tree">
+      <field name="name">sale.bonus.config.tree</field>
+      <field name="model">sale.bonus.config</field>
+      <field name="arch" type="xml">
+        <tree string="Sale Bonus Config">
+          <field name="sale_amount"/>
+          <field name="bonus_level"/>
+          <field name="bonus_trans"/>
+          <field name="bonus_referal"/>
+          <field name="bonus_sponsor"/>
+          <field name="bonus_gen"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Sale Bonus Form view  -->
+    <record id="sale_bonus_config_form" model="ir.ui.view">
+      <field name="name">sale.bonus.config.form</field>
+      <field name="model">sale.bonus.config</field>
+      <field name="arch" type="xml">
+        <form string="Sale Bonus Config">
+          <sheet>
+            <group>
+              <group col="4" colspan="4">
+                <field name="sale_amount"/>
+                <field name="bonus_level"/>
+                <field name="bonus_trans"/>
+                <field name="bonus_referal"/>
+                <field name="bonus_sponsor"/>
+                <field name="bonus_gen"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Sale Bonus Tree view  -->
+    <record model="ir.ui.view" id="view_sale_bonus_summary_tree">
+      <field name="name">sale.bonus.summary.tree</field>
+      <field name="model">res.users</field>
+      <field name="arch" type="xml">
+        <tree string="Sale Bonus Summary">
+          <field name="name"/>
+          <field name="bonus_transaksi"/>
+          <field name="bonus_referal"/>
+          <field name="bonus_sponsor"/>
+          <field name="bonus_gen"/>
+          <field name="total_bonus"/>
+          <field name="paid_bonus"/>
+          <field name="bonus_due"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Sale Bonus Form view  -->
+    <record id="sale_bonus_summary_form" model="ir.ui.view">
+      <field name="name">sale.bonus.summary.form</field>
+      <field name="model">res.users</field>
+      <field name="arch" type="xml">
+        <form string="Sale Bonus Summary">
+          <sheet>
+            <group>
+              <group col="4" colspan="4">
+                <field name="name"/>
+                <field name="bonus_transaksi"/>
+                <field name="bonus_referal"/>
+                <field name="bonus_sponsor"/>
+                <field name="bonus_gen"/>
+                <field name="total_bonus"/>
+                <field name="paid_bonus"/>
+                <field name="bonus_due"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Action Sale Bonus Summary -->
+    <record model="ir.actions.act_window" id="act_sale_bonus_summary">
+      <field name="name">Sale Bonus Summary</field>
+      <field name="res_model">res.users</field>
+      <field name="view_type">form</field>
+      <field name="view_id" ref="view_sale_bonus_summary_tree"/>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="sale_bonus_summary" name="Sale Bonus Summary" parent="sales_team.menu_sale_report" action="rjl_referal.act_sale_bonus_summary"/>
+
+  </data>
+</odoo>

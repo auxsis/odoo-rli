@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_pos_config_syncing">
+            <field name="name">pos.config.sync</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="pos_retail.pos_config_retail"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@id='sync_multi_session']" position="after">
+                    <group name="pos_retail_restaurant" string="Bar / Kitchen room settings" attrs="{'invisible': ['|', ('sync_multi_session', '=', False), ('bus_id', '=', False)]}">
+                        <field name="play_sound"/>
+                        <field name="sync_between_waiters"/>
+                        <field name="screen_type"/>
+                        <field name="display_product_image"/>
+                        <field name="display_floor"/>
+                        <field name="display_table"/>
+                        <field name="product_categ_ids"
+                            widget="many2many_tags"
+                            attrs="{'required': [('screen_type', '=', 'kitchen')], 'invisible': [('screen_type', '!=', 'kitchen')]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

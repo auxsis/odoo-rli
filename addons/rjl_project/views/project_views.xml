@@ -1,0 +1,399 @@
+<odoo>
+   <data> 
+
+    <!-- Project Progression Gantt View -->
+    <record id="view_project_progression_gantt" model="ir.ui.view">
+      <field name="name">project.progression.gantt</field>
+      <field name="model">project.progression</field>
+      <field name="arch" type="xml">
+        <gantt date_stop="due_date" date_start="start_date" progress="completation" string="Project Schedule">
+        </gantt>
+      </field>
+    </record>
+
+    <record id="act_project_progression" model="ir.actions.act_window">
+      <field name="name">Tasks</field>
+      <field name="res_model">project.progression</field>
+      <field name="view_mode">tree,form,gantt</field>
+      <field name="context">{
+          'group_by': 'project_id',
+          'search_default_project_id': [active_id],
+          'default_project_id': active_id,
+      }</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+            Here, you can create new tasks
+        </p>
+      </field>
+    </record>
+
+    <!-- Inherit Project Form  -->
+    <record id="rjl_project_form_inherit" model="ir.ui.view">
+      <field name="name">rjl.project.form.inherit</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.edit_project"/>
+      <field name="arch" type="xml">
+        <data>
+          <field name="partner_id" position="after">
+              <field name="company_id" groups="base.group_multi_company" />
+              <field name="currency_id" groups="base.group_multi_currency" />
+              <field name="date_start" string="Start Date" required="True"/>
+              <field name="date" string="Due Date" required="True"/>
+              <field name="target_progress" string="Target Progress" required="True"/>
+          </field>
+          <xpath expr="//sheet" position="after">
+            <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+              <field name="message_ids" widget="mail_thread"/>
+            </div>
+          </xpath>
+          <field name="user_id" position="replace"></field>
+          <xpath expr="//div[@class='oe_title']" position="replace">
+            <div class="oe_title">
+              <h1>
+                <field name="name" placeholder="Project Name"/>
+              </h1>
+              <div name="options_active" class="oe_edit_only">
+                <div>
+                  <field name="use_tasks" class="oe_inline" />
+                  <span invisible="True">as </span>
+                  <field name="label_tasks" class="oe_inline oe_input_align" />
+                </div>
+              </div>
+            </div>
+            <group>
+              <group>
+                <field name="pm_id" options="{'no_create': True, 'no_open': True}"/>
+                <field name="total_komisi"/>
+              </group>
+            </group>
+          </xpath>
+          <xpath expr="//notebook[last()]" position="inside">
+            <page name="project_member" string="Project Member">
+              <field name="member_ids">
+                <tree string="Project Member">
+                  <field name="name"/>
+                  <field name="mobile_phone"/>
+                </tree>
+              </field>
+            </page>
+            <page name="boq" string="BOQ">
+                <field name="boq_ids">
+                  <tree string="Project BOQ" editable="bottom">
+                    <field name="product_id"/>
+                    <field name="product_qty"/>
+                    <field name="product_price"/>
+                    <field name="price_subtotal"/>
+                  </tree>
+                </field>
+            </page>
+            <page name="rab" string="RAB">
+              <field name="rab_ids">
+                <tree string="RAB" editable="bottom">
+                  <field name="product_id"/>
+                  <field name="product_qty"/>
+                  <field name="task_id"/>
+                  <field name="due_date"/>
+                  <field name="bobot"/>
+                  <field name="purchased_qty"/>
+                  <field name="received_qty"/>
+                  <field name="surplus_qty"/>
+                  <field name="price_unit" groups="rjl_project.group_show_price"/>
+                  <field name="sub_total" groups="rjl_project.group_show_price"/>
+                  <field name="note"/>
+                </tree>
+              </field>
+              <group class="oe_subtotal_footer oe_right">
+                <field name="rab_amount" groups="rjl_project.group_show_price"/>
+                <field name="project_amount" colspan="2" groups="rjl_project.group_show_price"/>
+                <field name="total_expense" colspan="2" groups="rjl_project.group_show_price" />
+                <field name="gross_profit" colspan="2" groups="rjl_project.group_show_price" class="oe_subtotal_footer_separator" string="Current GP"/>
+              </group>
+            </page>
+            <page name="project_progression" string="Project Progression">
+              <field name="progression_ids">
+                <tree string="Project Progression"  colors="orange:state=='warning';red:state=='delay';red:due_date&lt;current_date and state!='done' and completation&lt;100">
+                  <field name="task_id"/>
+                  <field name="pic_ids" widget="many2many_tags"/>
+                  <field name="start_date"/>
+                  <field name="due_date"/>
+                  <field name="bobot"/>
+                  <field name="completation" widget="progressbar"/>
+                  <field name="completation_jasa" widget="progressbar"/>
+                  <field name="state"/>
+                </tree>
+                <form string="Project Progression">
+                  <header>
+                    <field name="state" widget="statusbar" statusbar_visible="on_progress,done" readonly="1"/>
+                  </header>
+                  <sheet>
+                    <div class="oe_title">
+                      <h1>
+                        <field name="task_id" placeholder="Task Name" options="{'no_create': True, 'no_open': True}" domain="[('child_ids', '=', False)]"/>
+                      </h1>
+                    </div>
+                    <group>
+                      <group col="4" colspan="4">
+                        <field name="pic_ids" widget="many2many_tags"/>
+                        <field name="start_date"/>
+                        <field name="due_date"/>
+                        <field name="bobot"/>
+                        <field name="completation_jasa"/>
+                        <field name="is_material"/>
+                      </group>
+                      <field name="notes"/>
+                    </group>
+                  </sheet>
+                </form>
+              </field>
+            </page>
+            <page name="purchase_order" string="Purchase Order">
+              <field name="po_ids" readonly="True">
+                <tree string="Purchase Order">
+                  <field name="name"/>
+                  <field name="date_order"/>
+                  <field name="partner_id"/>
+                  <field name="state"/>
+                </tree>
+              </field>
+            </page>
+            <page name="expense" string="Expense">
+              <field name="expense_ids" readonly="True">
+                <tree string="Expense">
+                  <field name="date"/>
+                  <field name="reference"/>
+                  <field name="name"/>
+                  <field name="product_id"/>
+                  <field name="state" invisible="True"/>
+                  <field name="total_amount" sum="Total"/>
+                </tree>
+              </field>
+            </page>
+            <page name="payment" string="Payment">
+              <field name="payment_invoice_ids" readonly="True">
+                <tree string="Purchase Order">
+                  <field name="number"/>
+                  <field name="date_invoice"/>
+                  <field name="amount_total" sum="Total"/>
+                  <field name="state" invisible="True"/>
+                </tree>
+              </field>
+            </page>
+          </xpath>
+        </data>
+      </field>
+    </record>
+
+    <!-- Inherit Project Kanban  -->
+    <record id="rjl_project_kanban_inherit" model="ir.ui.view">
+      <field name="name">rjl.project.kanban.inherit</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.view_project_kanban"/>
+      <field name="arch" type="xml">
+        <data>
+          <field name="name" position="after">
+              <field name="partner_id"/>
+              <field name="pm_id"/>
+              <field name="date_start"/>
+              <field name="date"/>
+              <field name="target_progress"/>
+              <field name="remaining_day"/>
+              <field name="po_amount"/>
+              <field name="total_expense"/>
+              <field name="payment_amount"/>
+              <field name="boq_amount"/>
+              <field name="rab_amount"/>
+              <field name="gross_profit"/>
+              <field name="gross_profit_percentage"/>
+              <field name="completation"/>
+          </field>
+          <xpath expr="//div[@class='o_primary']" position="replace">
+            <span><h1><t t-esc="record.name.value"/></h1></span>
+            <span>PM <strong style="margin-left:45px;">: <t t-esc="record.pm_id.value"/></strong></span>
+            <span>Customer<strong style="margin-left:10px;">: <t t-esc="record.partner_id.value"/></strong></span>
+            <span>Due Date<strong style="margin-left:12px;">: <t t-esc="record.date.value"/></strong></span>
+            <span>Target Progress<strong style="margin-left:12px;">: <t t-esc="record.target_progress.value"/></strong></span>
+            <span>Remaning Day<strong style="margin-left:12px;">: <t t-esc="record.remaining_day.value"/></strong></span>
+            <span>Total SO<strong style="margin-left:12px;">: <t t-esc="record.boq_amount.value"/></strong></span>
+            <span>Total RAB<strong style="margin-left:12px;">: <t t-esc="record.rab_amount.value"/></strong></span>
+            <span>PO Outgoing<strong style="margin-left:12px;">: <t t-esc="record.po_amount.value"/></strong></span>
+            <span>Total Expense<strong style="margin-left:12px;">: <t t-esc="record.total_expense.value"/></strong></span>
+            <span>Profit Amount<strong style="margin-left:12px;">: <t t-esc="record.gross_profit.value"/></strong> [<t t-esc="record.gross_profit_percentage.value"/>%]</span>            
+            <span>Payment Amount<strong style="margin-left:12px;">: <t t-esc="record.payment_amount.value"/></strong></span>
+          </xpath>
+          <xpath expr="//div[@class='o_project_kanban_boxes']" position="replace">
+            <div class="o_project_kanban_boxes">
+              <div class="o_project_kanban_box">
+                <a name="%(rjl_project.act_project_progression)d" type="action">
+                  <span class="o_value"><t t-esc="record.completation.value"/><strong> %</strong></span>
+                  <span class="o_label">Progression</span>
+                </a>
+              </div>
+              <div class="o_project_kanban_box">
+                <a name="attachment_tree_view" type="object">
+                  <span class="o_value"><t t-esc="record.doc_count.value"/></span>
+                  <span class="o_label">Documents</span>
+                </a>
+              </div>
+            </div>
+          </xpath>
+        </data>
+      </field>
+    </record>
+
+    <!-- Inherit Purchase Order Form -->
+    <record id="rjl_purchase_project_form_inherit" model="ir.ui.view">
+      <field name="name">rjl.purchase.project.form.inherit</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="arch" type="xml">
+        <data>
+          <field name="date_order" position="after">
+              <field name="project_id" string="Project" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+          </field>
+        </data>
+      </field>
+    </record>
+
+    <!-- Inherit Account invoice Form -->
+    <record id="rjl_invoice_project_form_inherit" model="ir.ui.view">
+      <field name="name">rjl.invoice.project.form.inherit</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id" ref="account.invoice_form"/>
+      <field name="arch" type="xml">
+        <data>
+          <field name="partner_id" position="after">
+            <field name="project_id" string="Project" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+          </field>
+        </data>
+      </field>
+    </record>
+
+    <!-- Inherit Expense Form -->
+    <record id="rjl_expense_project_form_inherit" model="ir.ui.view">
+      <field name="name">rjl.expense.project.form.inherit</field>
+      <field name="model">hr.expense</field>
+      <field name="inherit_id" ref="hr_expense.hr_expense_form_view"/>
+      <field name="arch" type="xml">
+        <data>
+          <field name="product_id" position="after">
+            <field name="project_id" string="Project" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+          </field>
+        </data>
+      </field>
+    </record>
+
+    <!-- Inherit Stock Picking Form -->
+    <record id="rjl_stock_picking_project_form_inherit" model="ir.ui.view">
+      <field name="name">rjl.stock.picking.project.form.inherit</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <data>
+          <field name="partner_id" position="after">
+            <field name="project_id" string="Project" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('state', '=', 'done')]}"/>
+          </field>
+        </data>
+      </field>
+    </record>
+
+    <!-- Inherit Account invoice Form -->
+    <record id="rjl_invoice_project_supplier_form_inherit" model="ir.ui.view">
+      <field name="name">rjl.invoice.supplier.project.form.inherit</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id" ref="account.invoice_supplier_form"/>
+      <field name="arch" type="xml">
+        <data>
+          <field name="partner_id" position="after">
+            <field name="project_id" string="Project" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+          </field>
+        </data>
+      </field>
+    </record>
+
+    <!-- Action Project Task -->
+    <record model="ir.actions.act_window" id="act_project_task">
+      <field name="name">Project Task</field>
+      <field name="res_model">project.job.task</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="project_task_menu" name="Project Task" parent="project.menu_project_config" action="rjl_project.act_project_task"/>
+
+    <!-- Project Task Tree view  -->
+    <record model="ir.ui.view" id="view_project_task_tree">
+      <field name="name">project.task.tree</field>
+      <field name="model">project.job.task</field>
+      <field name="arch" type="xml">
+        <tree string="Project Task">
+          <field name="name"/>
+          <field name="parent_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Project Task Form view  -->
+    <record id="project_task_form" model="ir.ui.view">
+      <field name="name">project.task.form</field>
+      <field name="model">project.job.task</field>
+      <field name="arch" type="xml">
+        <form string="Project Task">
+          <sheet>
+            <group>
+              <group col="4" colspan="4">
+                <field name="name"/>
+                <field name="parent_id"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Project Progression Tree view  -->
+    <record model="ir.ui.view" id="view_project_progression_tree">
+      <field name="name">project.progression.tree</field>
+      <field name="model">project.progression</field>
+      <field name="arch" type="xml">
+        <tree string="Project Progression">
+          <field name="task_id"/>
+          <field name="start_date"/>
+          <field name="due_date"/>
+          <field name="completation"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Project Outstanding Tree view  -->
+    <record model="ir.ui.view" id="view_project_outstanding_tree">
+      <field name="name">project.outstanding.tree</field>
+      <field name="model">project.project</field>
+      <field name="arch" type="xml">
+        <tree string="Project Outstanding">
+          <field name="name"/>
+          <field name="boq_amount" sum="Total"/>
+          <field name="payment_amount" sum="Total"/>
+          <field name="outstanding_amount" sum="Total"/>
+          <field name="outstanding_percentage" sum="Total"/>
+          <field name="completation"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Action Project Outstanding -->
+    <record model="ir.actions.act_window" id="act_project_outstanding">
+      <field name="name">Project Outstanding</field>
+      <field name="res_model">project.project</field>
+      <field name="view_type">form</field>
+      <field name="domain">[('done', '=', True)]</field>
+      <field name="view_id" ref="view_project_outstanding_tree"/>
+      <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="project_outstanding_menu" name="Project Outstanding" parent="project.menu_project_config" action="rjl_project.act_project_outstanding"/>
+
+
+  </data>
+</odoo>

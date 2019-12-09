@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="pos_retail_restaurant_product" model="ir.ui.view">
+            <field name="name">product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="pos_retail.product_template_pos_retail"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='manufacturing_out_of_stock']" position="after">
+                    <div name="integration_kitchen" groups="point_of_sale.group_pos_manager">
+                        <div>
+                            <field name="integration_kitchen"/>
+                            <label for="integration_kitchen" string="Integration Kitchen"/>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//div[@name='mrp']" position="replace">
+                    <div name="mrp" attrs="{'invisible': [('manufacturing_out_of_stock', '=', False), ('integration_kitchen', '=', False)]}"
+                         groups="point_of_sale.group_pos_manager">
+                        <group>
+                            <field name="manufacturing_state"
+                                   attrs="{'invisible': [('manufacturing_out_of_stock', '=', False), ('integration_kitchen', '=', False)], 'required': ['|', ('manufacturing_out_of_stock', '=', True), ('integration_kitchen', '=', True)]}"/>
+                            <field name="pos_min_qty"
+                                   attrs="{'invisible': ['|', ('manufacturing_out_of_stock', '=', False), ('available_in_pos', '=', False)], 'required': [('manufacturing_out_of_stock', '=', True), ('available_in_pos', '=', True)]}"/>
+                            <field name="pos_manufacturing_quantity"
+                                   attrs="{'invisible': ['|', ('manufacturing_out_of_stock', '=', False), ('available_in_pos', '=', False)], 'required': [('manufacturing_out_of_stock', '=', True), ('available_in_pos', '=', True)]}"/>
+                            <field name="bom_id" context="{'default_product_tmpl_id': active_id}"
+                                   attrs="{'invisible': [('manufacturing_out_of_stock', '=', False), ('integration_kitchen', '=', False)], 'required': ['|', ('manufacturing_out_of_stock', '=', True), ('integration_kitchen', '=', True)]}"/>
+                        </group>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

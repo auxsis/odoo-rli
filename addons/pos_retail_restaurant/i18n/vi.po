@@ -1,0 +1,330 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* pos_retail_restaurant
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \nhủy"
+"POT-Creation-Date: 2018-01-14 06:40+0000\n"
+"PO-Revision-Date: 2018-01-14 06:40+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "$ 3.12"
+msgstr "$ 3.12"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "$ 4.40"
+msgstr "$ 4.40"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "$ 4.50"
+msgstr "$ 4.50"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "$ 8.50"
+msgstr "$ 8.50"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "<span class=\"pos-change_amount\">$ 0.86</span>"
+msgstr "<span class=\"pos-change_amount\">$ 0.86</span>"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "<span class=\"pos-change_title\">Change</span>"
+msgstr "<span class=\"pos-change_title\">Change</span>"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "<span class=\"total-amount-formatting\">TOTAL</span>"
+msgstr "<span class=\"total-amount-formatting\">TOTAL</span>"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "<span id=\"total-amount\" class=\"pos_total-amount\">$ 469.14</span>"
+msgstr "<span id=\"total-amount\" class=\"pos_total-amount\">$ 469.14</span>"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "<span>$ 470.00</span>"
+msgstr "<span>$ 470.00</span>"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "<span>Cash (USD):</span>"
+msgstr "<span>Cash (USD):</span>"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/core.xml:23
+#, python-format
+msgid "CANCELLED"
+msgstr "Đã "
+
+#. module: pos_retail_restaurant
+#: model:ir.model.fields,help:pos_retail_restaurant.field_pos_config_categ_ids
+msgid "Categories for Kitchen/Bar can see at screen"
+msgstr "Danh mục dành cho bếp hoặc bar room có thể thấy"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_kitchen.xml:97
+#, python-format
+msgid "Confirm cancel"
+msgstr "Xác nhận hủy"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_waiter.xml:129
+#, python-format
+msgid "Delete"
+msgstr "Xóa"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_kitchen.xml:80
+#, python-format
+msgid "Delivery"
+msgstr " Đưa lên cho khách"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_waiter.xml:105
+#, python-format
+msgid "Done"
+msgstr "Hoàn tất"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_waiter.xml:140
+#, python-format
+msgid "Done all"
+msgstr "Hoàn tất tất cả"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_waiter.xml:110
+#, python-format
+msgid "Error"
+msgstr "Hư hỏng, không đúng yêu cầu"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_waiter.xml:144
+#, python-format
+msgid "Exit priority"
+msgstr "Tắt ưu tiên"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "Fanta"
+msgstr "Fanta"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_kitchen.xml:16
+#, python-format
+msgid "Floor"
+msgstr "Khu"
+
+#. module: pos_retail_restaurant
+#: model:ir.actions.act_window,name:pos_retail_restaurant.action_restaurant_table
+#: model:ir.ui.menu,name:pos_retail_restaurant.menu_action_restaurant_table
+msgid "Floor Tables"
+msgstr "Số bàn trong khu"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "Gordon"
+msgstr "Gordon"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_waiter.xml:148
+#, python-format
+msgid "High Priority"
+msgstr "Gấp"
+
+#. module: pos_retail_restaurant
+#: selection:pos.config,screen_type:0
+msgid "Kitchen"
+msgstr "Bếp"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "Malibu Drink"
+msgstr "Malibu Drink"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/core.xml:45
+#, python-format
+msgid "NEW"
+msgstr "Mới"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/core.xml:33
+#: code:addons/pos_retail_restaurant/static/src/xml/core.xml:55
+#, python-format
+msgid "NOTE"
+msgstr "Ghi chú"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_kitchen.xml:19
+#, python-format
+msgid "Name"
+msgstr "Tên"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_kitchen.xml:85
+#, python-format
+msgid "Not Enough Material"
+msgstr "Không đủ nguyên liệu"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_kitchen.xml:21
+#, python-format
+msgid "Notes"
+msgstr "Ghi chú"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "Odoo Logo"
+msgstr "Odoo Logo"
+
+#. module: pos_retail_restaurant
+#: model:ir.model.fields,help:pos_retail_restaurant.field_pos_config_play_sound
+msgid "On kitchen/bar screen, if you need have ring tone when have some requests from waiters, you can check to this field"
+msgstr "Sẻ có chuông báo khi có món mới"
+
+#. module: pos_retail_restaurant
+#: model:ir.model.fields,field_description:pos_retail_restaurant.field_pos_config_categ_ids
+msgid "POS Categories"
+msgstr "Danh mục điểm bán"
+
+#. module: pos_retail_restaurant
+#: model:ir.model.fields,field_description:pos_retail_restaurant.field_pos_config_play_sound
+msgid "Play a sound"
+msgstr "Chuông khi có đơn mới"
+
+#. module: pos_retail_restaurant
+#: model:ir.ui.view,arch_db:pos_retail_restaurant.view_pos_config_syncing
+msgid "Play sound when transactions/requests comming"
+msgstr "Chuông khi có đơn mới"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "Price"
+msgstr "Giá"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_waiter.xml:117
+#, python-format
+msgid "Priority"
+msgstr "Ưu tiên"
+
+#. module: pos_retail_restaurant
+#: model:ir.ui.view,arch_db:pos_retail_restaurant.view_pos_config_syncing
+msgid "Product categories access"
+msgstr "Danh mục sản phẩm truy cập"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_kitchen.xml:91
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_waiter.xml:124
+#, python-format
+msgid "Put Back"
+msgstr "Quay lại"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_kitchen.xml:20
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+#, python-format
+msgid "Quantity"
+msgstr "Số lượng"
+
+#. module: pos_retail_restaurant
+#: model:ir.ui.view,arch_db:pos_retail_restaurant.view_restaurant_table_tree
+msgid "Restaurant Table"
+msgstr "Bàn"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_waiter.xml:152
+#, python-format
+msgid "Send Kitchen/bar"
+msgstr "Đưa qua bếp"
+
+#. module: pos_retail_restaurant
+#: model:ir.model.fields,field_description:pos_retail_restaurant.field_pos_config_screen_type
+msgid "Session Type"
+msgstr "Loại điểm bán"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_kitchen.xml:22
+#, python-format
+msgid "Status"
+msgstr "Trạng thái"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_kitchen.xml:17
+#, python-format
+msgid "Table"
+msgstr "Bàn"
+
+#. module: pos_retail_restaurant
+#: model:ir.ui.view,arch_db:pos_retail_restaurant.pos_restaurant_kitchen_floor_form
+msgid "Tables"
+msgstr "Bàn"
+
+#. module: pos_retail_restaurant
+#. openerp-web
+#: code:addons/pos_retail_restaurant/static/src/xml/screen_kitchen.xml:18
+#, python-format
+msgid "Time"
+msgstr "Thời gian"
+
+#. module: pos_retail_restaurant
+#: model:ir.ui.view,arch_db:pos_retail_restaurant.view_pos_config_syncing
+msgid "Type of screen seller"
+msgstr "Kiểu hiển thị"
+
+#. module: pos_retail_restaurant
+#: selection:pos.config,screen_type:0
+msgid "Waiter"
+msgstr "Người bán hàng"
+
+#. module: pos_retail_restaurant
+#: model:pos.config,customer_facing_display_html:pos_retail_restaurant.pos_config_kitchen
+msgid "Water"
+msgstr "Nước"
+
+#. module: pos_retail_restaurant
+#: model:ir.model,name:pos_retail_restaurant.model_pos_config
+msgid "pos.config"
+msgstr "pos.config"
+
+#. module: pos_retail_restaurant
+#: model:ir.model,name:pos_retail_restaurant.model_restaurant_table
+msgid "restaurant.table"
+msgstr "restaurant.table"
+
